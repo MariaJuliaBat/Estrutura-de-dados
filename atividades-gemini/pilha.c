@@ -13,8 +13,10 @@ struct pilha{
     PilhaNo *topo;
 };
 
-void inicia(Pilha *p){
+Pilha *criaPilha(){
+    Pilha *p = (Pilha*) malloc (sizeof(Pilha));
     p -> topo = NULL;
+    return p;
 }
 
 
