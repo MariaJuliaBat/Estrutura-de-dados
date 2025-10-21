@@ -2,54 +2,65 @@
 #include <stdlib.h>
 
 typedef struct lista Lista;
-typedef struct listano Listano;
+typedef struct listano ListaNo;
 
 struct lista{
     ListaNo *prim;
     ListaNo *ult;
 };
 
-struct listano{
+struct listano {
     int elem;
     ListaNo *prox;
     ListaNo *ant;
 };
 
 Lista* cria_lista(void){
-    Lista* l = (Lista*) malloc (sizeof(Lista));
-    l -> prim = NULL;
-    l -> ult = NULL;
+    Lista* l = (Lista*) malloc(sizeof(Lista));
+    l->prim = NULL;
+    l->ult = NULL;
+
+    return l;
 }
 
-void insere_no(Lista* l. int valor){
+void cria_no(Lista* l, int valor){
     ListaNo *novo = (ListaNo*) malloc(sizeof(ListaNo));
-    novo -> elem = valor;
-    novo -> prox = l -> prim;
-    novo -> ant = NULL;
+    novo->elem = valor;
+    novo->prox = l->prim;
+    novo->ant = NULL;
 
-    if (l-> prim != NULL){
-        l-> prim -> ant = novo;
+    if(l->prim != NULL){
+        l->prim->ant = novo;
     }else{
-        l-> ult = novo;
+        l->ult = novo;
     }
-    l -> prim = novo;
+    l->prim = novo;
 }
 
+void imprime(Lista* l){
+    ListaNo* p = l->prim;
 
-ListaNo* busca(LIsta* l, int valor){
-    for (ListaNo* p = l -> prim; p != NULL; p = p -> prox){
-        if (p ->elem == valor){
+    if(p == NULL){
+        printf("Lista vazia \n");
+    }else{
+        for (p = l->prim; p != NULL; p = p->prox){
+            printf("Item = %d\n", p->elem);
+        }
+    }    
+}
+
+ListaNo* busca(Lista* l, int valor){
+    for (ListaNo* p = l->prim; p != NULL; p = p->prox){
+        if (p->elem == valor){
             return p;
         }
     }
     return NULL;
 }
 
-
 int vazia(Lista *l){
-    return (l -> prim == NULL);
+    return (l->prim == NULL);
 }
-
 
 void excluir(Lista* l, int valor){
     ListaNo* p = busca(l, valor);
@@ -73,8 +84,6 @@ void excluir(Lista* l, int valor){
     }
     free(p);
 }
-
-
 
 void libera(Lista* l){
     ListaNo* p = l->prim;
